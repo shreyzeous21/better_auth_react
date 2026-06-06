@@ -15,20 +15,11 @@ export const auth = betterAuth({
 
   emailAndPassword: {
     enabled: true,
+    requireEmailVerification: true,
+    minPasswordLength: 8,
   },
 
-  plugins: [
-    jwt({
-      jwt: {
-        expiresIn: "30d",
-      },
-      schema: {
-        jwks: {
-          disableMigrations: true,
-        },
-      },
-    }),
-  ],
+  plugins: [jwt({ jwt: { expiresIn: "30d" } })],
 
   session: {
     expiresIn: 30 * 24 * 60 * 60,
