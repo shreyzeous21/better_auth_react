@@ -55,4 +55,20 @@ export const auth = betterAuth({
       generateId: false,
     },
   },
+
+  advanced: {
+    cookiePrefix: "better-auth",
+    crossSubDomainCookies: {
+      enabled: true,
+    },
+    cookies: {
+      sessionToken: {
+        attributes: {
+          sameSite: "none",
+          secure: false,
+          httpOnly: true,
+        },
+      },
+    },
+  },
 });
