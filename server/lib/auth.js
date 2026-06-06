@@ -4,7 +4,7 @@ import { prisma } from "./prisma.js";
 import { jwt } from "better-auth/plugins";
 
 export const auth = betterAuth({
-  trustedOrigins: ["*"],
+  trustedOrigins: ["https://betterauthreact.vercel.app"],
 
   database: prismaAdapter(prisma, {
     provider: "postgresql",
