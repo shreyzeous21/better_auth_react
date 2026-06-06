@@ -22,7 +22,7 @@ app.all("/api/auth/{*any}", toNodeHandler(auth));
 
 app.use(express.json());
 
-app.get("/", requireApiSecret, (req, res) => {
+app.get("/", (req, res) => {
   res.json({
     success: true,
     message: "API is running!",
