@@ -3,18 +3,17 @@ import React from "react";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { LogOutIcon } from "lucide-react";
+import { useNavigate } from "react-router";
+import { handleLogout } from "./lib/actions";
 
 export default function LogoutButton() {
-  const handleSubmit = async () => {
-    try {
-      await signOut();
-      toast.success("Logout successfully!");
-    } catch (error) {
-      toast.error(error?.message ?? "something went wrong");
-    }
-  };
+  const navigate = useNavigate();
   return (
-    <Button onClick={handleSubmit} variant="destructive">
+    <Button
+      onClick={() => handleLogout(navigate)}
+      variant="destructive"
+      className={"flex items-center gap-2"}
+    >
       <LogOutIcon />
       Logout
     </Button>
