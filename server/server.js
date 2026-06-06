@@ -11,7 +11,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: isProduction ? env.CLIENT_URL : true,
+    origin: isProduction ? "https://betterauthreact.vercel.app" : true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization", "x-api-secret"],
     credentials: true,
