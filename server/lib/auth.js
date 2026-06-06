@@ -70,8 +70,8 @@ export const auth = betterAuth({
     cookies: {
       sessionToken: {
         attributes: {
-          sameSite: isProduction ? "none" : "lax",
-          secure: isProduction ? true : false,
+          sameSite: "none",
+          secure: true,
           httpOnly: true,
         },
       },
