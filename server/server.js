@@ -3,7 +3,7 @@ import { env } from "./lib/env.js";
 import { toNodeHandler } from "better-auth/node";
 import cors from "cors";
 import { auth } from "./lib/auth.js";
-import { requireApiSecret } from "./middleware/auth-middleware.js";
+import { requireApiSecret, requireAuth } from "./middleware/auth-middleware.js";
 
 const isProduction = env.NODE_ENV === "production";
 
@@ -27,6 +27,14 @@ app.get("/", (req, res) => {
     success: true,
     message: "API is running!",
     environment: env.NODE_ENV,
+  });
+});
+
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    succes: true,
+    message: "Server is alive!",
+    timestamp: new Date().toISOString(),
   });
 });
 
