@@ -17,7 +17,6 @@ export const auth = betterAuth({
   plugins: [jwt()],
 
   session: {
-    strategy: "jwt",
     expiresIn: 30 * 24 * 60 * 60, // 30 days
     cookieCache: {
       enabled: true,
