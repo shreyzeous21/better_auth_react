@@ -5,9 +5,7 @@ import { jwt } from "better-auth/plugins";
 import { env } from "./env.js";
 
 const isProduction = env.NODE_ENV === "production";
-const trustedOrigins = isProduction
-  ? ["https://betterauthreact.vercel.app"]
-  : ["*"];
+const trustedOrigins = isProduction ? [env.CLIENT_URL] : ["*"];
 
 export const auth = betterAuth({
   trustedOrigins,
