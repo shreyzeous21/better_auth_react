@@ -1,14 +1,12 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "./prisma.js";
-import { jwt } from "better-auth/plugins";
 import { env } from "./env.js";
 
 const isProduction = env.NODE_ENV === "production";
-const trustedOrigins = isProduction ? [env.CLIENT_URL] : ["*"];
 
 export const auth = betterAuth({
-  trustedOrigins,
+  trustedOrigins: isProduction ? [env.CLIENT_URL] : ["*"],
 
   database: prismaAdapter(prisma, {
     provider: "postgresql",
@@ -18,13 +16,12 @@ export const auth = betterAuth({
     enabled: true,
   },
 
-  plugins: [jwt()],
-
   session: {
-    expiresIn: 30 * 24 * 60 * 60, // 30 days
+    strategy: "jwt",
+    expiresIn: 30 * 24 * 60 * 60,
     cookieCache: {
       enabled: true,
-      maxAge: 5 * 60, // 5 minutes
+      maxAge: 5 * 60,
     },
   },
 
@@ -33,12 +30,10 @@ export const auth = betterAuth({
       create: {
         before: async (user) => {
           const ADMIN_EMAILS = process.env.ADMIN_EMAILS?.split(";");
-
           if (ADMIN_EMAILS?.includes(user.email)) {
             user.role = "SUPERADMIN";
             user.emailVerified = true;
           }
-
           return { data: user };
         },
       },
@@ -55,31 +50,28 @@ export const auth = betterAuth({
   },
 
   advanced: {
-    database: {
-      generateId: false,
-    },
-  },
-
-  advanced: {
     cookiePrefix: "better-auth",
-    crossSubDomainCookies: {
+    crossSubdomainCookies: {
       enabled: true,
     },
     cookies: {
       session_token: {
         attributes: {
-          sameSite: "none",
+          sameSite: isProduction ? "none" : "lax",
           secure: true,
           httpOnly: true,
         },
       },
       dont_remember: {
         attributes: {
-          sameSite: "none",
+          sameSite: isProduction ? "none" : "lax",
           secure: true,
           httpOnly: true,
         },
       },
+    },
+    database: {
+      generateId: false,
     },
   },
 });
