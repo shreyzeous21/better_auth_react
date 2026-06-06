@@ -14,7 +14,7 @@ export const auth = betterAuth({
     enabled: true,
   },
 
-  plugins: [jwt(), apiKey()],
+  plugins: [jwt()],
 
   session: {
     strategy: "jwt",
