@@ -5,9 +5,12 @@ import { jwt } from "better-auth/plugins";
 import { env } from "./env.js";
 
 const isProduction = env.NODE_ENV === "production";
+const trustedOrigins = isProduction
+  ? ["https://betterauthreact.vercel.app"]
+  : ["*"];
 
 export const auth = betterAuth({
-  trustedOrigins: ["https://betterauthreact.vercel.app"],
+  trustedOrigins,
 
   database: prismaAdapter(prisma, {
     provider: "postgresql",
