@@ -2,7 +2,6 @@ import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "./prisma.js";
 import { jwt } from "better-auth/plugins";
-import { apiKey } from "@better-auth/api-key";
 
 export const auth = betterAuth({
   trustedOrigins: ["*"],
