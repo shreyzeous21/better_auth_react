@@ -1,6 +1,7 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "./prisma.js";
+import { jwt } from "better-auth/plugins";
 import { env } from "./env.js";
 
 const isProduction = env.NODE_ENV === "production";
@@ -16,12 +17,24 @@ export const auth = betterAuth({
     enabled: true,
   },
 
+  plugins: [
+    jwt({
+      jwt: {
+        expiresIn: "30d",
+      },
+      schema: {
+        jwks: {
+          disableMigrations: true,
+        },
+      },
+    }),
+  ],
+
   session: {
-    strategy: "jwt",
     expiresIn: 30 * 24 * 60 * 60,
     cookieCache: {
       enabled: true,
-      maxAge: 5 * 60,
+      maxAge: 30 * 24 * 60 * 60,
     },
   },
 
@@ -58,14 +71,14 @@ export const auth = betterAuth({
       session_token: {
         attributes: {
           sameSite: isProduction ? "none" : "lax",
-          secure: true,
+          secure: isProduction,
           httpOnly: true,
         },
       },
       dont_remember: {
         attributes: {
           sameSite: isProduction ? "none" : "lax",
-          secure: true,
+          secure: isProduction,
           httpOnly: true,
         },
       },
