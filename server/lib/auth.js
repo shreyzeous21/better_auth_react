@@ -70,14 +70,14 @@ export const auth = betterAuth({
     cookies: {
       session_token: {
         attributes: {
-          sameSite: "none", // ✅ hardcode none
-          secure: true, // ✅ hardcode true
+          sameSite: "none",
+          secure: true,
           httpOnly: true,
         },
       },
       dont_remember: {
         attributes: {
-          sameSite: "none", // ✅ fix this cookie too
+          sameSite: "none",
           secure: true,
           httpOnly: true,
         },
