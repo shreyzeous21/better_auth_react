@@ -68,9 +68,16 @@ export const auth = betterAuth({
       enabled: true,
     },
     cookies: {
-      sessionToken: {
+      session_token: {
         attributes: {
-          sameSite: "none",
+          sameSite: "none", // ✅ hardcode none
+          secure: true, // ✅ hardcode true
+          httpOnly: true,
+        },
+      },
+      dont_remember: {
+        attributes: {
+          sameSite: "none", // ✅ fix this cookie too
           secure: true,
           httpOnly: true,
         },
