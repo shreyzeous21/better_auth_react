@@ -2,6 +2,9 @@ import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "./prisma.js";
 import { jwt } from "better-auth/plugins";
+import { env } from "./env.js";
+
+const isProduction = env.NODE_ENV === "production";
 
 export const auth = betterAuth({
   trustedOrigins: ["https://betterauthreact.vercel.app"],
@@ -64,8 +67,8 @@ export const auth = betterAuth({
     cookies: {
       sessionToken: {
         attributes: {
-          sameSite: "none",
-          secure: false,
+          sameSite: isProduction ? "none" : "lax",
+          secure: isProduction ? true : false,
           httpOnly: true,
         },
       },
