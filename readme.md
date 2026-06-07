@@ -67,7 +67,7 @@ better_auth_react/
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/shreysadhukhan/better-auth-react.git
+git clone https://github.com/shreyzeous21/better_auth_react.git
 cd better_auth_react
 ```
 
